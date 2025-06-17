@@ -1,0 +1,16 @@
+user(username, email, password, fname, lname, dateofbirth, gender, bio, profilepic, country, city)
+model(model_name, model_context, model_bio)
+user_model_chat(username, model_name, msg_role, msg_text, datetime)
+user_info(username, model_name, user_info)
+
+admin(username, email, password, fname, lname, dateofbirth, gender, country, city)
+admin_model(admin_username, model_name)
+
+supervisor(username, email, password, fname, lname, dateofbirth, gender, bio, profilepic, country, city)
+supervisor_user(supervisor_username, user_username)
+supervisor_model(supervisor_username, model_name)
+supervisor_user_model(supervisor_username, user_username, model_name)
+
+user_thread_member(supervisor_username, user_username, member_username)
+user_thread_chat(supervisor_username, user_username, member_username, msg_text, datetime)
+

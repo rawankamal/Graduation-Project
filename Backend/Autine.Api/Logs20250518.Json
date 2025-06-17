@@ -1,0 +1,47 @@
+[2025-05-18 02:03:35 INF] HTTP GET /api/Bots/my-bots responded 401 in 137.4937 ms
+[2025-05-18 02:41:50 INF] HTTP GET /api/Bots/my-bots responded 401 in 108.1819 ms
+[2025-05-18 02:41:51 INF] HTTP GET /api/Bots/my-bots responded 401 in 2.6688 ms
+[2025-05-18 14:54:15 INF] HTTP GET /api/Bots/my-bots responded 401 in 194.0370 ms
+[2025-05-18 14:54:46 INF] HTTP GET /api/auths/register responded 404 in 2.6561 ms
+[2025-05-18 14:56:01 INF] HTTP GET /api/auths/register responded 404 in 1.7149 ms
+[2025-05-18 14:56:45 INF] HTTP GET /api/auths/register responded 404 in 0.2424 ms
+[2025-05-18 14:57:10 INF] HTTP GET /api/auths/registerd responded 404 in 0.1315 ms
+[2025-05-18 14:57:20 INF] HTTP POST /api/auths/register responded 404 in 0.1959 ms
+[2025-05-18 14:57:24 INF] HTTP POST /api/auths/register responded 404 in 0.2049 ms
+[2025-05-18 14:57:43 INF] HTTP GET /api/Bots/my-bots responded 401 in 2.4144 ms
+[2025-05-18 14:58:02 INF] HTTP POST /api/Auths/register responded 404 in 0.2273 ms
+[2025-05-18 14:59:25 INF] Registering user: Doc2@gimal.com
+[2025-05-18 14:59:27 INF] User registered: 5af77027-0596-4e7b-b9cc-bd51ddc5fa5e
+[2025-05-18 14:59:29 INF] Sending POST request to "https://grad-project-ai-api.vercel.app/auth/user/register"
+[2025-05-18 14:59:29 INF] Start processing HTTP request POST https://grad-project-ai-api.vercel.app/auth/user/register
+[2025-05-18 14:59:29 INF] Sending HTTP request POST https://grad-project-ai-api.vercel.app/auth/user/register
+[2025-05-18 14:59:29 INF] Received HTTP response headers after 769.0268ms - 201
+[2025-05-18 14:59:29 INF] End processing HTTP request after 786.1453ms - 201
+[2025-05-18 14:59:29 INF] Received success response from "https://grad-project-ai-api.vercel.app/auth/user/register"
+[2025-05-18 14:59:29 INF] User registered: 5af77027-0596-4e7b-b9cc-bd51ddc5fa5e
+[2025-05-18 14:59:30 INF] HTTP POST /Auths/register responded 200 in 7858.3201 ms
+[2025-05-18 15:06:57 INF] HTTP GET /api/Bots/my-bots responded 401 in 4.0558 ms
+[2025-05-18 15:09:30 INF] Registering user: Doc2@gimal.com
+[2025-05-18 15:09:31 WRN] Email already registered: Doc2@gimal.com
+[2025-05-18 15:09:31 WRN] User registration failed: This email is exists before select another one!
+[2025-05-18 15:10:31 INF] Registering user: Doc29@gimal.com
+[2025-05-18 15:10:34 INF] User registered: 35e021e3-a8f9-4b72-8927-40e09526cb1b
+[2025-05-18 15:10:35 INF] Sending POST request to "https://grad-project-ai-api.vercel.app/auth/user/register"
+[2025-05-18 15:10:35 INF] Start processing HTTP request POST https://grad-project-ai-api.vercel.app/auth/user/register
+[2025-05-18 15:10:35 INF] Sending HTTP request POST https://grad-project-ai-api.vercel.app/auth/user/register
+[2025-05-18 15:10:41 INF] Received HTTP response headers after 5753.4153ms - 201
+[2025-05-18 15:10:41 INF] End processing HTTP request after 5777.4631ms - 201
+[2025-05-18 15:10:41 INF] Received success response from "https://grad-project-ai-api.vercel.app/auth/user/register"
+[2025-05-18 15:10:41 INF] User registered: 35e021e3-a8f9-4b72-8927-40e09526cb1b
+[2025-05-18 15:11:34 INF] Registering user: Doc29@gimal.com
+[2025-05-18 15:11:35 WRN] Email already registered: Doc29@gimal.com
+[2025-05-18 15:11:35 WRN] User registration failed: This email is exists before select another one!
+[2025-05-18 15:13:02 INF] Registering user: Doc299@gimal.com
+[2025-05-18 15:13:04 INF] User registered: e30dd3a7-17ec-41ce-90df-6353501963b6
+[2025-05-18 15:13:05 INF] Sending POST request to "https://grad-project-ai-api.vercel.app/auth/user/register"
+[2025-05-18 15:13:05 INF] Start processing HTTP request POST https://grad-project-ai-api.vercel.app/auth/user/register
+[2025-05-18 15:13:05 INF] Sending HTTP request POST https://grad-project-ai-api.vercel.app/auth/user/register
+[2025-05-18 15:13:06 INF] Received HTTP response headers after 771.8886ms - 201
+[2025-05-18 15:13:06 INF] End processing HTTP request after 794.3921ms - 201
+[2025-05-18 15:13:06 INF] Received success response from "https://grad-project-ai-api.vercel.app/auth/user/register"
+[2025-05-18 15:13:06 INF] User registered: e30dd3a7-17ec-41ce-90df-6353501963b6

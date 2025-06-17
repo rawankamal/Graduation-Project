@@ -1,0 +1,5 @@
+[2025-05-17 23:38:48 INF] HTTP GET /swagger/index.html responded 404 in 81.8338 ms
+[2025-05-17 23:38:51 INF] HTTP GET /swagger/index.html responded 404 in 0.4355 ms
+[2025-05-17 23:39:45 INF] HTTP GET /api/Bots/my-bots responded 401 in 60.3794 ms
+[2025-05-17 23:40:25 INF] HTTP GET /swagger/index.html responded 404 in 0.1117 ms
+[2025-05-17 23:40:29 INF] HTTP GET /swagger/ responded 404 in 0.0988 ms

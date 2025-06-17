@@ -1,2 +1,2 @@
-# GradProject-All
+# GradProject
 Graduation Project Repo.

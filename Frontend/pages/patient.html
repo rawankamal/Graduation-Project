@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>patient</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+        rel="stylesheet">
+    <!-- toastify js -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="../CSS/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/therapist.css">
+    <link rel="stylesheet" href="../CSS/components.css">
+    <link rel="stylesheet" href="../CSS/classes.css">
+</head>
+
+<body>
+    <div class="layout-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <img src="../images/logo.png" alt="logo" class="text-center" width="120">
+
+            <div class="d-flex align-items-start aside-nav">
+                <div class="sidebar-nav nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
+                    aria-orientation="vertical">
+                    <!-- dashboard -->
+                    <button class="nav-link active" id="v-pills-dashboard-tab" data-bs-toggle="pill"
+                        data-bs-target="#v-pills-dashboard" type="button" role="tab" aria-controls="v-pills-dashboard"
+                        aria-selected="true">
+                        <i class="bi bi-grid-1x2 pe-1"></i>
+                        Dashboard
+                    </button>
+                    <!-- patients -->
+                    <button class="nav-link" id="v-pills-patients-tab" data-bs-toggle="pill"
+                        data-bs-target="#v-pills-patients" type="button" role="tab" aria-controls="v-pills-patients"
+                        aria-selected="false">
+                        <i class="bi bi-people pe-1"></i>
+                        Patients
+                    </button>
+                    <!-- bots -->
+                    <button class="nav-link" id="v-pills-bots-tab" data-bs-toggle="pill" data-bs-target="#v-pills-bots"
+                        type="button" role="tab" aria-controls="v-pills-bots" aria-selected="false">
+                        <i class="bi bi-robot pe-1"></i>
+                        Bots
+                    </button>
+                    <!-- chats -->
+                    <button class="nav-link" id="v-pills-chats-tab" data-bs-toggle="pill"
+                        data-bs-target="#v-pills-chats" type="button" role="tab" aria-controls="v-pills-chats"
+                        aria-selected="false">
+                        <i class="bi bi-chat-left pe-1"></i>
+                        Chats</button>
+                </div>
+            </div>
+            <div class="d-flex align-items-start fz-20" data-bs-toggle="modal" data-bs-target="#logoutModal"
+                style="cursor: pointer;">
+                <i class="bi bi-box-arrow-right pe-2"></i>
+                Logout
+            </div>
+            <!-- Logout Confirmation Modal -->
+            <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content d-flex flex-column justify-content-center align-items-center py-3">
+                        <h4 class="modal-title" id="logoutModalLabel">Logout?</h4>
+                        <p class="fs-4 my-4">Are you sure you want to logout?</p>
+                        <div>
+                            <button type="button" class="custom-btn bg-transparent"
+                                data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="custom-btn btn-error " onclick="handleLogout()">Logout</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Persistent Header -->
+            <header class=" top-bar d-flex justify-content-between align-items-center border-bottom pb-3"
+                id="main-header">
+                <p class="fz-26 ps-2" id="header-title">Dashboard</p>
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="search-bar mx-4 border">
+                        <i class="bi bi-search text-secondary"></i>
+                        <input type="search" class="" placeholder="Search for a bot...">
+                    </div>
+                    <!-- settings -->
+                    <i class="bi bi-gear fs-4 mx-3" data-bs-toggle="modal" data-bs-target="#settingsModal"
+                        style="cursor: pointer;"></i>
+                    <!-- settings modal -->
+                    <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-dialog-centered ">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title ps-2" id="settingsModalLabel">Settings</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="d-flex align-items-start justify-content-between"
+                                        style="height: 100vh; overflow: hidden;">
+                                        <!-- buttons -->
+                                        <aside class="settings-sidebar" id="settingsSidebar"
+                                            style="height: 100%; overflow-y: auto;">
+                                            <div class="nav settings-nav flex-column nav-pills me-3" id="v-pills-tab"
+                                                role="tablist" aria-orientation="vertical">
+                                                <button class="nav-link active" id="v-pills-profile-tab"
+                                                    data-bs-toggle="pill" data-bs-target="#v-pills-profile"
+                                                    type="button" role="tab" aria-controls="v-pills-profile"
+                                                    aria-selected="true">
+                                                    <i class="bi bi-person pe-1"></i>
+                                                    Profile
+                                                </button>
+                                                <button class="nav-link" id="v-pills-notifications-tab"
+                                                    data-bs-toggle="pill" data-bs-target="#v-pills-notifications"
+                                                    type="button" role="tab" aria-controls="v-pills-notifications"
+                                                    aria-selected="true">
+                                                    <i class="bi bi-bell pe-1"></i>
+                                                    Notifications
+                                                </button>
+                                                <button class="nav-link" id="v-pills-changePassword-tab"
+                                                    data-bs-toggle="pill" data-bs-target="#v-pills-changePassword"
+                                                    type="button" role="tab" aria-controls="v-pills-changePassword"
+                                                    aria-selected="true">
+                                                    <i class="bi bi-lock pe-1"></i>
+                                                    Change Password
+                                                </button>
+                                                <button class="nav-link" id="v-pills-terms-tab" data-bs-toggle="pill"
+                                                    data-bs-target="#v-pills-terms" type="button" role="tab"
+                                                    aria-controls="v-pills-terms" aria-selected="true">
+                                                    <i class="bi bi-file-earmark-text pe-1"></i>
+                                                    Terms Of Use
+                                                </button>
+                                                <button class="nav-link" id="v-pills-privacy-tab" data-bs-toggle="pill"
+                                                    data-bs-target="#v-pills-privacy" type="button" role="tab"
+                                                    aria-controls="v-pills-privacy" aria-selected="true">
+                                                    <i class="bi bi-shield pe-1"></i>
+                                                    Privacy Policy
+                                                </button>
+                                                <button class="nav-link" id="v-pills-deleteAcc-tab"
+                                                    data-bs-toggle="pill" data-bs-target="#v-pills-deleteAcc"
+                                                    type="button" role="tab" aria-controls="v-pills-deleteAcc"
+                                                    aria-selected="true" style="color:#FF4B4B !important;">
+                                                    <i class="bi bi-trash pe-1"></i>
+                                                    Delete Account
+                                                </button>
+                                            </div>
+                                        </aside>
+                                        <!-- content -->
+                                        <div class="tab-content settings-content" id="v-pills-tabContent"
+                                            style="height: 100%; overflow-y: auto;">
+                                            <!-- profile -->
+                                            <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel"
+                                                aria-labelledby="v-pills-profile-tab" tabindex="0">
+                                                <form action="./therapist.html">
+                                                    <div class="row">
+                                                        <!-- profile pic -->
+                                                        <div class="col-12 mb-3">
+                                                            <div
+                                                                class="d-flex justify-content-start align-items-center">
+                                                                <img src="../images/therapist.png" alt="therapist"
+                                                                    width="80px" class="rounded-circle">
+                                                                <div
+                                                                    class="d-flex flex-column align-items-start justify-content-start ps-3">
+                                                                    <div>
+                                                                        <label for="profile-pic"
+                                                                            class="btn-text btn-text-primary border-end pe-2">upload
+                                                                            Photo</label>
+                                                                        <input type="file" id="profile-pic"
+                                                                            class="d-none" accept="image/*">
+                                                                        <button
+                                                                            class="btn-text btn-text-error ps-1">Delete</button>
+                                                                    </div>
+                                                                    <p class="text-secondary w-75">
+                                                                        An image of the person it’s best if it has the
+                                                                        same length and height
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- name -->
+                                                        <div class="col-lg-6 col-sm-12 col-md-12 ps-lg-1 mb-3">
+                                                            <label for="firstName" class="custom-label">First
+                                                                Name</label>
+                                                            <span class="star-span">*</span>
+                                                            <input type="text" id="firstName"
+                                                                placeholder="Enter your first name"
+                                                                class="bg-transparent">
+                                                        </div>
+                                                        <div class="col-lg-6 col-sm-12 col-md-12 pe-lg-1 mb-3">
+                                                            <label class="custom-label" for="lastName">Last Name</label>
+                                                            <span class="star-span">*</span>
+                                                            <input type="text" id="lastName"
+                                                                placeholder="Enter your last name"
+                                                                class="bg-transparent">
+                                                        </div>
+                                                        <!-- dob -->
+                                                        <div class="col-lg-4 col-md-12 col-sm-12 ps-lg-1">
+                                                            <label class="custom-label">Date of birth</label>
+                                                            <span class="star-span">*</span>
+                                                            <select name="day" id="dob-day"
+                                                                class="form-select bg-transparent">
+                                                            </select>
+                                                        </div>
+                                                        <!-- month select -->
+                                                        <div class="col-lg-4 col-md-12 col-sm-12 px-lg-1">
+                                                            <label class="custom-label"></label>
+                                                            <span class="star-span"></span>
+                                                            <select class="form-select bg-transparent" id="dob-month">
+                                                                <option value="1">January</option>
+                                                                <option value="2">February</option>
+                                                                <option value="3">March</option>
+                                                                <option value="4">April</option>
+                                                                <option value="5">May</option>
+                                                                <option value="6">June</option>
+                                                                <option value="7">July</option>
+                                                                <option value="8">August</option>
+                                                                <option value="9">September</option>
+                                                                <option value="10">October</option>
+                                                                <option value="11">November</option>
+                                                                <option value="12">December</option>
+                                                            </select>
+                                                        </div>
+                                                        <!-- year select -->
+                                                        <div class="col-lg-4 col-md-12 col-sm-12 pe-lg-1">
+                                                            <label class="custom-label"></label>
+                                                            <span class="star-span"></span>
+                                                            <select class="form-select bg-transparent" id="dob-year">
+                                                            </select>
+                                                        </div>
+                                                        <!-- gender -->
+                                                        <div class="col-lg-6 col-sm-12 col-md-12 ps-lg-1">
+                                                            <label class="custom-label">Gender</label>
+                                                            <span class="star-span">*</span>
+                                                            <input type="radio" id="female" name="customRadio"
+                                                                value="female" class="bg-transparent">
+                                                            <label for="female"
+                                                                class="custom-radio-input input d-flex justify-content-between align-items-center custom-radio-label">
+                                                                <p>Female</p>
+                                                                <span class="custom-radio"></span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-lg-6 col-sm-12 col-md-12 pe-lg-1">
+                                                            <label class="custom-label"></label>
+                                                            <span class="star-span"></span>
+                                                            <input type="radio" id="male" name="customRadio"
+                                                                value="male" class="bg-transparent">
+                                                            <label for="male"
+                                                                class="custom-radio-input input d-flex justify-content-between align-items-center custom-radio-label">
+                                                                <p>Male</p>
+                                                                <span class="custom-radio"></span>
+                                                            </label>
+                                                        </div>
+                                                        <!-- bio -->
+                                                        <div class="col-12 mb-4">
+                                                            <label class="custom-label" for="bio">Bio</label>
+                                                            <span class="star-span">*</span>
+                                                            <textarea name="bio" id="bio" rows="10"
+                                                                class="d-block bg-transparent"
+                                                                placeholder="Share something about yourself."></textarea>
+                                                        </div>
+                                                        <!-- country & city -->
+                                                        <!-- Country -->
+                                                        <div class="col-lg-6 col-12 pe-lg-1">
+                                                            <label class="custom-label" for="country">Country</label>
+                                                            <span class="star-span">*</span>
+                                                            <select class="form-select bg-transparent" id="country">
+                                                            </select>
+                                                        </div>
+                                                        <!-- City -->
+                                                        <div class="col-lg-6 col-12 ps-lg-1 mb-3">
+                                                            <label class="custom-label" for="city">City</label>
+                                                            <span class="star-span">*</span>
+                                                            <select class="form-select bg-transparent" id="city">
+                                                            </select>
+                                                        </div>
+                                                        <div
+                                                            class="col-12 d-flex justify-content-end align-items-center">
+                                                            <button class="custom-btn bg-transparent">Cancel</button>
+                                                            <button class="custom-btn btn-primary-500">Save
+                                                                Changes</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <!-- notifications -->
+                                            <div class="tab-pane fade" id="v-pills-notifications" role="tabpanel"
+                                                aria-labelledby="v-pills-notifications-tab" tabindex="0">
+                                                <div class="d-flex justify-content-between align-items-center w-100">
+                                                    <p>Allow Notification</p>
+                                                    <i class="bi bi-toggle-on fs-4" id="notificationToggle"></i>
+                                                </div>
+                                            </div>
+                                            <!-- change password -->
+                                            <div class="tab-pane fade" id="v-pills-changePassword" role="tabpanel"
+                                                aria-labelledby="v-pills-changePassword-tab" tabindex="0">
+                                                <div>
+                                                    <form action="changePassword">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <label for="currentPassword">Current Password</label>
+                                                                <div class="position-relative custom-input">
+                                                                    <input type="password" id="currentPassword"
+                                                                        name="currentPassword" class="bg-transparent"
+                                                                        required>
+                                                                    <i class="bi bi-eye" id="toggleCurrentPassword"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12">
+                                                                <label for="newPassword">New Password</label>
+                                                                <div class="position-relative custom-input">
+                                                                    <input type="password" class="bg-transparent"
+                                                                        id="newPassword" name="newPassword" required>
+                                                                    <i class="bi bi-eye" id="toggleNewPassword"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12">
+                                                                <label for="confirmPassword">Confirm New
+                                                                    Password</label>
+                                                                <div class="position-relative custom-input">
+                                                                    <input type="password" id="confirmPassword"
+                                                                        name="confirmPassword" class="bg-transparent"
+                                                                        required>
+                                                                    <i class="bi bi-eye" id="toggleConfirmPassword"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <!-- terms of use -->
+                                            <div class="tab-pane fade" id="v-pills-terms" role="tabpanel"
+                                                aria-labelledby="v-pills-terms-tab" tabindex="0">
+                                            </div>
+                                            <!-- privacy policy -->
+                                            <div class="tab-pane fade" id="v-pills-privacy" role="tabpanel"
+                                                aria-labelledby="v-pills-privacy-tab" tabindex="0">
+                                            </div>
+                                            <!-- delete account -->
+                                            <div class="tab-pane fade" id="v-pills-deleteAcc" role="tabpanel"
+                                                aria-labelledby="v-pills-deleteAcc-tab" tabindex="0">
+                                                <div
+                                                    class="d-flex flex-column justify-content-center align-items-start">
+                                                    <p class="mb-3 text-secondary fs-5">For Security Reasons, Please
+                                                        Provide Your Existing Password</p>
+                                                    <label for="password"
+                                                        class="custom-label text-secondary ms-1 mb-1">Password</label>
+                                                    <input type="password" id="password" name="password"
+                                                        class="bg-transparent ms-1" placeholder="Enter your password"
+                                                        required>
+                                                    <button class="custom-btn btn-error w-100 my-3"
+                                                        onclick="confirmDeletion()">Delete</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="position-relative border-none me-3">
+                        <i class="bi bi-bell fs-4"></i>
+                        <span
+                            class="position-absolute top-0 start-100 translate-middle p-2 btn-primary-500 rounded-circle">
+                        </span>
+                    </div>
+                    <div class="therapist-details d-flex justify-content-between align-items-center">
+                        <img src="../images/therapist.png" alt="photo" width="70px" class="rounded-circle mx-3">
+                        <article class="">
+                            <p class="fw-bold">Darrell Steward</p>
+                            <p>Therapist</p>
+                        </article>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Tab Content -->
+            <div class="tab-content" id="v-pills-tabContent">
+                <!-- dashboard -->
+                <div class="patients-tab tab-pane fade show active" id="v-pills-dashboard" role="tabpanel"
+                    aria-labelledby="v-pills-dashboard-tab" tabindex="0">
+                    <main>
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="myPatients-tab" data-bs-toggle="tab"
+                                    data-bs-target="#myPatients-tab-pane" type="button" role="tab"
+                                    aria-controls="myPatients-tab-pane" aria-selected="true">My Patients</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="following-tab" data-bs-toggle="tab"
+                                    data-bs-target="#following-tab-pane" type="button" role="tab"
+                                    aria-controls="following-tab-pane" aria-selected="false">Following</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="myPatients-tab-pane" role="tabpanel"
+                                aria-labelledby="myPatients-tab" tabindex="0">
+                                <!-- section header -->
+                                <div class="row justify-content-between align-items-center m-3 m-md-4">
+                                    <div class="col-12 col-md-6 d-flex align-items-center mb-3 mb-md-0">
+                                        <i class="bi bi-people section-icon"></i>
+                                        <span class="fs-2" id="patients-count">0</span>
+                                        <p class="ms-2 border-color fs-5 fs-md-4 mb-0">Total Patients</p>
+                                    </div>
+                                    <div class="col-12 col-md-6 d-flex justify-content-start justify-content-md-end">
+                                        <!-- filter -->
+                                        <button class="custom-btn bg-transparent border me-2" data-bs-toggle="offcanvas"
+                                            data-bs-target="#filterOffcanvas">
+                                            <i class="bi bi-funnel"></i>
+                                            Filters
+                                        </button>
+
+                                        
+                                        <!-- add patient btn -->
+                                        <button class="btn-primary-500 custom-btn" data-bs-toggle="offcanvas"
+                                            data-bs-target="#addPatientOffcanvas">
+                                            Add Patient
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- empty bot container -->
+                                <div class="row justify-content-center empty-bot-container d-none"
+                                    id="empty-bot-container">
+                                    <div
+                                        class="col-12 d-flex flex-column justify-content-center align-items-center py-5">
+                                        <img src="../images/patient-empty.png" alt="empty-bot" class="img-fluid"
+                                            style="max-width: 300px;">
+                                    </div>
+                                </div>
+
+                                <!-- patient cards -->
+                                <div class="row px-4">
+                                    <table class="table p-10 table-borderless table-responsive" id="patients-table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Age</th>
+                                                <th scope="col">Diagnosis</th>
+                                                <th scope="col">Last Session</th>
+                                                <th scope="col">Next Session</th>
+                                                <th scope="col">Guardian</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col"></th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <img src="../images/patient.png" alt="patient" class="pe-1"
+                                                        width="30">
+                                                    John Doe
+                                                </td>
+                                                <td>12 years</td>
+                                                <td>Moderate ASD</td>
+                                                <td>Feb 20, 2025</td>
+                                                <td>Mar 25, 2025</td>
+                                                <td>Emily Carter</td>
+                                                <td>
+                                                    <button class="stable-btn">
+                                                        Stable
+                                                    </button>
+                                                </td>
+                                                <td class="position-relative">
+                                                    <i class="fs-4 bi bi-three-dots-vertical" data-bs-toggle="dropdown"
+                                                        style="cursor: pointer;"></i>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item custom-drop" href="#"><i
+                                                                    class="bi bi-pencil me-2"></i>Edit Patient</a></li>
+                                                        <li><a class="dropdown-item text-danger custom-drop" href="#"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#deletePatientModal"><i
+                                                                    class="bi bi-trash me-2"></i>Delete Patient</a></li>
+
+
+                                                    </ul>
+                                                </td>
+
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <img src="../images/p2.png" alt="patient" class="pe-1" width="30">
+                                                    Jane Smith
+                                                </td>
+                                                <td>10 years</td>
+                                                <td>Severe ASD</td>
+                                                <td>Feb 15, 2025</td>
+                                                <td>Mar 20, 2025</td>
+                                                <td>Michael Smith</td>
+                                                <td>
+                                                    <button class="improving-btn">
+                                                        Improving
+                                                    </button>
+                                                </td>
+                                                <td>
+                                                    <i class="fs-4 bi bi-three-dots-vertical"></i>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <img src="../images/p3.png" alt="patient" class="pe-1" width="30">
+                                                    Alice Johnson
+                                                </td>
+                                                <td>8 years</td>
+                                                <td>Mild ASD</td>
+                                                <td>Feb 10, 2025</td>
+                                                <td>Mar 15, 2025</td>
+                                                <td>Sarah Johnson</td>
+                                                <td>
+                                                    <button class="critical-btn">
+                                                        Critical
+                                                    </button>
+                                                </td>
+                                                <td>
+                                                    <i class="fs-4 bi bi-three-dots-vertical"></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="following-tab-pane" role="tabpanel"
+                                aria-labelledby="following-tab" tabindex="0">
+                                <!-- section header -->
+                                <div class="row justify-content-between align-items-center m-3 m-md-4">
+                                    <div class="col-12 col-md-6 d-flex align-items-center mb-3 mb-md-0">
+                                        <i class="bi bi-people section-icon"></i>
+                                        <span class="fs-2" id="patients-count">3</span>
+                                        <p class="ms-2 border-color fs-5 fs-md-4 mb-0">Total Patients</p>
+                                    </div>
+                                    <div class="col-12 col-md-6 d-flex justify-content-start justify-content-md-end">
+                                        <!-- filter -->
+                                        <button class="custom-btn bg-transparent border me-2">
+                                            <i class="bi bi-funnel"></i>
+                                            Filters
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- empty bot container -->
+                                <div class="row justify-content-center d-none empty-bot-container"
+                                    id="empty-bot-container">
+                                    <div
+                                        class="col-12 d-flex flex-column justify-content-center align-items-center py-5">
+                                        <img src="../images/patient-empty.png" alt="empty-bot" class="img-fluid"
+                                            style="max-width: 300px;">
+                                    </div>
+                                </div>
+                                <!-- patient cards -->
+                                <div class="row px-4">
+                                    <table class="table p-10 table-borderless table-responsive" id="patients-table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Age</th>
+                                                <th scope="col">Diagnosis</th>
+                                                <th scope="col">Last Session</th>
+                                                <th scope="col">Next Session</th>
+                                                <th scope="col">Guardian</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col"></th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <img src="../images/patient.png" alt="patient" class="pe-1"
+                                                        width="30">
+                                                    John Doe
+                                                </td>
+                                                <td>12 years</td>
+                                                <td>Moderate ASD</td>
+                                                <td>Feb 20, 2025</td>
+                                                <td>Mar 25, 2025</td>
+                                                <td>Emily Carter</td>
+                                                <td>
+                                                    <button class="stable-btn">
+                                                        Stable
+                                                    </button>
+                                                </td>
+                                                <td>
+                                                    <i class="fs-4 bi bi-three-dots-vertical"></i>
+                                                </td>
+
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <img src="../images/p2.png" alt="patient" class="pe-1" width="30">
+                                                    Jane Smith
+                                                </td>
+                                                <td>10 years</td>
+                                                <td>Severe ASD</td>
+                                                <td>Feb 15, 2025</td>
+                                                <td>Mar 20, 2025</td>
+                                                <td>Michael Smith</td>
+                                                <td>
+                                                    <button class="improving-btn">
+                                                        Improving
+                                                    </button>
+                                                </td>
+                                                <td>
+                                                    <i class="fs-4 bi bi-three-dots-vertical"></i>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <img src="../images/p3.png" alt="patient" class="pe-1" width="30">
+                                                    Alice Johnson
+                                                </td>
+                                                <td>8 years</td>
+                                                <td>Mild ASD</td>
+                                                <td>Feb 10, 2025</td>
+                                                <td>Mar 15, 2025</td>
+                                                <td>Sarah Johnson</td>
+                                                <td>
+                                                    <button class="critical-btn">
+                                                        Critical
+                                                    </button>
+                                                </td>
+                                                <td>
+                                                    <i class="fs-4 bi bi-three-dots-vertical"></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+                <!-- patients -->
+                <div class="tab-pane fade" id="v-pills-patients" role="tabpanel" aria-labelledby="v-pills-patients-tab"
+                    tabindex="0">
+                    <main>
+                        <p>Patients Content</p>
+                    </main>
+                </div>
+                <!-- bots -->
+                <div class="tab-pane fade" id="v-pills-bots" role="tabpanel" aria-labelledby="v-pills-bots-tab"
+                    tabindex="0">
+                    <main>
+                        <p>Bots Content</p>
+                    </main>
+                </div>
+                <!-- chats -->
+                <div class="tab-pane fade" id="v-pills-chats" role="tabpanel" aria-labelledby="v-pills-chats-tab"
+                    tabindex="0">
+                    <main>
+                        <div class="row mt-4">
+                            <div class="top-bar d-flex justify-content-between align-items-center border-bottom pb-3">
+                                <p class="fz-26 ps-2">My Chats</p>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Patient Confirmation Modal -->
+    <div class="modal fade" id="deletePatientModal" tabindex="-1" aria-labelledby="deletePatientModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content d-flex flex-column justify-content-center align-items-center p-3">
+                <h4 class="modal-title" id="deletePatientModalLabel">Delete Patient?</h4>
+                <p class="fs-5 mt-3 text-center">Are you sure you want to delete this patient?</p>
+                <p class="fs-5 mt-1 mb-4 text-center">This action cannot be undone.</p>
+                <div>
+                    <button type="button" class="custom-btn bg-transparent" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="custom-btn btn-error" onclick="handleDeletePatient()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- add Patient -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="addPatientOffcanvas"
+        aria-labelledby="addPatientOffcanvasLabel">
+        <div class="offcanvas-header">
+            <h1 class="offcanvas-title fs-4" id="addPatientOffcanvasLabel">Add Patient</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+
+        <div class="offcanvas-body pb-0 ">
+            <form>
+                <!-- form -->
+                <div class="row p-3 d-none" id="addPatientStep1">
+                    <!-- profile pic -->
+                    <div class="col-12 mb-3">
+                        <div class="d-flex justify-content-start align-items-center">
+                            <img src="../images/user.png" alt="therapist" width="80px"
+                                class="rounded-circle therapist-pic">
+                            <div class="d-flex flex-column align-items-start justify-content-start ps-3">
+                                <div>
+                                    <label for="profile-pic" class="btn-text btn-text-primary pe-2">Upload
+                                        Photo</label>
+                                    <input type="file" id="profile-pic" class="d-none" accept="image/*">
+                                </div>
+                                <p class="text-secondary w-75 fz-14">
+                                    An image of the person it's best if it has the
+                                    same length and height
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- name -->
+                    <div class="col-lg-6 col-sm-12 col-md-12 ps-lg-1">
+                        <label for="firstName" class="custom-label">First Name</label>
+                        <span class="star-span">*</span>
+                        <input type="text" id="firstName" placeholder="First name">
+                    </div>
+                    <div class="col-lg-6 col-sm-12 col-md-12 pe-lg-1">
+                        <label class="custom-label" for="lastName">Last Name</label>
+                        <span class="star-span">*</span>
+                        <input type="text" id="lastName" placeholder="Last name">
+                    </div>
+                    <!-- email -->
+                    <div class="col-lg-12 col-sm-12 col-md-12 mb-3 p-1 p-sm-2">
+                        <label for="email" class="custom-label">Email</label>
+                        <input type="email" id="adminEmail" placeholder="Enter your email"
+                            class="bg-transparent form-control" required>
+                        <div class="invalid-feedback">Please enter a valid email address</div>
+                    </div>
+                    <!-- password -->
+                    <div class="col-lg-12 col-sm-12 col-md-12 mb-3 p-1 p-sm-2">
+                        <label for="password" class="custom-label">Password</label>
+                        <div class="position-relative custom-input">
+                            <input type="password" id="adminPassword" name="adminPassword"
+                                class="bg-transparent form-control" required>
+                            <i class="bi bi-eye position-absolute" id="toggleCurrentPassword"
+                                style="top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer;"></i>
+                            <div class="invalid-feedback">Please enter your current password
+                            </div>
+                        </div>
+                        <div class="invalid-feedback">Please enter your password</div>
+                    </div>
+                    <div class="col-lg-6 col-sm-12 col-md-6 ps-lg-1 mb-3">
+                        <label class="custom-label">Gender</label>
+                        <span class="star-span">*</span>
+                        <input type="radio" id="female" name="customRadio" value="female">
+                        <label for="female"
+                            class="custom-radio-input input d-flex justify-content-between align-items-center custom-radio-label">
+                            <p>Female</p>
+                            <span class="custom-radio"></span>
+                        </label>
+                    </div>
+                    <!-- gender -->
+                    <div class="col-lg-6 col-sm-12 col-md-6 pe-lg-1 mb-3">
+                        <label class="custom-label"></label>
+                        <span class="star-span"></span>
+                        <input type="radio" id="male" name="customRadio" value="male">
+                        <label for="male"
+                            class="custom-radio-input input d-flex justify-content-between align-items-center custom-radio-label">
+                            <p>Male</p>
+                            <span class="custom-radio"></span>
+                        </label>
+                    </div>
+                    <!-- "DOB" -->
+                    <!-- day select -->
+                    <div class="col-lg-4 col-md-4 col-sm-12 ps-lg-1 mb-3">
+                        <label class="custom-label">Date of birth</label>
+                        <span class="star-span">*</span>
+                        <select name="day" id="dob-day" class="form-select">
+                        </select>
+
+                    </div>
+                    <!-- month select -->
+                    <div class="col-lg-4 col-md-4 col-sm-12 px-lg-1 mb-3">
+                        <label class="custom-label"></label>
+                        <span class="star-span"></span>
+                        <select class="form-select" id="dob-month">
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+                    <!-- year select -->
+                    <div class="col-lg-4 col-md-4 col-sm-12 pe-lg-1 mb-3">
+                        <label class="custom-label"></label>
+                        <span class="star-span"></span>
+                        <select class="form-select" id="dob-year">
+
+                        </select>
+                    </div>
+                </div>
+                <div class="row p-3 d-none" id="addPatientStep2">
+                    <h4 class="col-12 mb-3">Medical Information</h4>
+                    <!-- Diagnosis -->
+                    <div class="col-12">
+                        <label class="custom-label">Diagnosis</label>
+                        <select class="bg-transparent">
+                            <option value="mild">Mild ASD</option>
+                            <option value="moderate">Moderate ASD</option>
+                            <option value="severe">Severe ASD</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <hr>
+                    </div>
+
+                    <!-- Status -->
+                    <div class="col-12">
+                        <label class="custom-label">Status</label>
+                        <select class="bg-transparent">
+                            <option value="stable">Stable</option>
+                            <option value="improving">Improving</option>
+                            <option value="critical">Critical</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <hr>
+                    </div>
+                    <h4 class="col-12 mb-3 mt-4">Supervision Access</h4>
+                    <div class="dropdown">
+                        <button class="btn-text btn-text-primary" type="button" id="supervisorsDropdown"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Add Additional Supervisor
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="supervisorsDropdown" id="patientDropdownList">
+                            <!-- Patient list dynamically populated -->
+                        </ul>
+                    </div>
+                </div>
+                <div class="row p-3" id="addPatientStep3">
+                    <!-- Last Session -->
+                    <div class="col-12 mb-2">
+                        <label class="custom-label ">Last Session</label>
+                    </div>
+                    <div class="col-4">
+                        <select name="lastSessionDay" id="lastSessionDay">
+                            <option value="">Day</option>
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <select name="lastSessionMonth" id="lastSessionMonth">
+                            <option value="">Month</option>
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <select name="lastSessionYear" id="lastSessionYear">
+                            <option value="">Year</option>
+                        </select>
+                    </div>
+
+                    <!-- Next Session -->
+                    <div class="col-12 mb-2 mt-3">
+                        <label class="custom-label">Next Session</label>
+                    </div>
+                    <div class="col-4">
+                        <select name="nextSessionDay" id="nextSessionDay">
+                            <option value="">Day</option>
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <select name="nextSessionMonth" id="nextSessionMonth">
+                            <option value="">Month</option>
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <select name="nextSessionYear" id="nextSessionYear">
+                            <option value="">Year</option>
+                        </select>
+                    </div>
+
+                    <!-- Session Frequency -->
+                    <div class="col-12 mt-3">
+                        <label class="custom-label">Session Frequency</label>
+                        <select class="bg-transparent">
+                            <option value="mild">Mild ASD</option>
+                            <option value="moderate">Moderate ASD</option>
+                            <option value="severe">Severe ASD</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="offcanvas-footer me-3 mb-3">
+            <div class="me-5 col-12 text-end">
+                <button type="button" class="custom-btn btn-primary-500 next-step">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter Offcanvas -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="filterOffcanvas" aria-labelledby="filterOffcanvasLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="filterOffcanvasLabel">Filters</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <form class="row">
+                <!-- Last Session -->
+                <div class="col-12 mb-2">
+                    <label class="custom-label ">Last Session</label>
+                </div>
+                <div class="col-6">
+                    <label class="text-secondary fs-6">From:</label>
+                    <input type="date" class=" bg-transparent">
+                </div>
+                <div class="col-6">
+                    <label class="text-secondary fs-6">To:</label>
+                    <input type="date" class=" bg-transparent">
+                </div>
+                <div class="col-12">
+                    <hr>
+                </div>
+
+                <!-- Next Session -->
+                <div class="col-12 mb-2">
+                    <label class="custom-label ">Next Session</label>
+                </div>
+                <div class="col-6">
+                    <label class="text-secondary fs-6">From:</label>
+                    <input type="date" class=" bg-transparent">
+                </div>
+                <div class="col-6">
+                    <label class="text-secondary fs-6">To:</label>
+                    <input type="date" class=" bg-transparent">
+                </div>
+                <div class="col-12">
+                    <hr>
+                </div>
+
+                <!-- Diagnosis -->
+                <div class="col-12">
+                    <label class="custom-label">Diagnosis</label>
+                    <select class="bg-transparent">
+                        <option value="">All</option>
+                        <option value="mild">Mild ASD</option>
+                        <option value="moderate">Moderate ASD</option>
+                        <option value="severe">Severe ASD</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <hr>
+                </div>
+
+                <!-- Status -->
+                <div class="col-12">
+                    <label class="custom-label">Status</label>
+                    <select class="bg-transparent">
+                        <option value="">All</option>
+                        <option value="stable">Stable</option>
+                        <option value="improving">Improving</option>
+                        <option value="critical">Critical</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <hr>
+                </div>
+
+                <div class="mt-4 d-flex justify-content-between">
+                    <button type="reset" class="custom-btn bg-transparent ">Reset
+                        All</button>
+                    <button type="submit" class="custom-btn  btn-primary-500">Apply
+                        Now</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let currentStep = 1;
+        const totalSteps = 4;
+
+        // Initialize date dropdowns
+        function populateDays(selectId) {
+            const select = document.getElementById(selectId);
+            for (let i = 1; i <= 31; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                select.appendChild(option);
+            }
+        }
+
+        function populateYears(selectId, startYear = 1950) {
+            const select = document.getElementById(selectId);
+            const currentYear = new Date().getFullYear();
+            for (let i = currentYear; i >= startYear; i--) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                select.appendChild(option);
+            }
+        }
+
+        // Initialize all date dropdowns
+        populateDays('dobDay');
+        populateYears('dobYear');
+        populateDays('lastSessionDay');
+        populateYears('lastSessionYear', 2020);
+        populateDays('nextSessionDay');
+        populateYears('nextSessionYear', 2024);
+
+        // Password toggle
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            const password = document.getElementById('password');
+            const icon = this.querySelector('i');
+
+            if (password.type === 'password') {
+                password.type = 'text';
+                icon.classList.remove('bi-eye');
+                icon.classList.add('bi-eye-slash');
+            } else {
+                password.type = 'password';
+                icon.classList.remove('bi-eye-slash');
+                icon.classList.add('bi-eye');
+            }
+        });
+
+        // Step navigation
+        function updateStepIndicators() {
+            for (let i = 1; i <= totalSteps; i++) {
+                const indicator = document.getElementById(`step${i}-indicator`);
+                if (i < currentStep) {
+                    indicator.className = 'rounded-circle bg-success text-white mx-auto d-flex align-items-center justify-content-center';
+                    indicator.innerHTML = '<i class="bi bi-check"></i>';
+                } else if (i === currentStep) {
+                    indicator.className = 'rounded-circle bg-primary text-white mx-auto d-flex align-items-center justify-content-center';
+                    indicator.textContent = i;
+                } else {
+                    indicator.className = 'rounded-circle bg-secondary text-white mx-auto d-flex align-items-center justify-content-center';
+                    indicator.textContent = i;
+                }
+            }
+        }
+
+        function updateProgressBar() {
+            const progress = (currentStep / totalSteps) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('progressBar').setAttribute('aria-valuenow', progress);
+        }
+
+        function showStep(step) {
+            // Hide all steps
+            document.querySelectorAll('.step-content').forEach(el => {
+                el.classList.add('d-none');
+            });
+
+            // Show current step
+            document.getElementById(`step${step}`).classList.remove('d-none');
+
+            // Update navigation buttons
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            if (step === 1) {
+                prevBtn.classList.add('d-none');
+            } else {
+                prevBtn.classList.remove('d-none');
+            }
+
+            if (step === totalSteps) {
+                nextBtn.textContent = 'Complete Registration';
+            } else {
+                nextBtn.textContent = 'Next';
+            }
+
+            updateStepIndicators();
+            updateProgressBar();
+        }
+
+        function validateStep(step) {
+            let isValid = true;
+
+            if (step === 1) {
+                const requiredFields = ['firstName', 'lastName', 'email', 'password'];
+                requiredFields.forEach(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    if (!field.value.trim()) {
+                        field.classList.add('is-invalid');
+                        isValid = false;
+                    } else {
+                        field.classList.remove('is-invalid');
+                    }
+                });
+
+                // Check gender selection
+                const genderSelected = document.querySelector('input[name="gender"]:checked');
+                if (!genderSelected) {
+                    isValid = false;
+                    alert('Please select a gender.');
+                }
+
+                // Check date of birth
+                const dobDay = document.getElementById('dobDay').value;
+                const dobMonth = document.getElementById('dobMonth').value;
+                const dobYear = document.getElementById('dobYear').value;
+
+                if (!dobDay || !dobMonth || !dobYear) {
+                    isValid = false;
+                    alert('Please select your complete date of birth.');
+                }
+            } else if (step === 2) {
+                const verificationCode = document.getElementById('verificationCode').value;
+                if (!verificationCode || verificationCode.length !== 6) {
+                    document.getElementById('verificationCode').classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    document.getElementById('verificationCode').classList.remove('is-invalid');
+                }
+            } else if (step === 3) {
+                // Check diagnosis (at least 1 selected)
+                const diagnosisChecked = document.querySelectorAll('.diagnosis-check:checked');
+                if (diagnosisChecked.length === 0) {
+                    isValid = false;
+                    alert('Please select at least one diagnosis.');
+                }
+
+                // Check status (at least 1 selected)
+                const statusChecked = document.querySelectorAll('.status-check:checked');
+                if (statusChecked.length === 0) {
+                    isValid = false;
+                    alert('Please select at least one status.');
+                }
+            }
+
+            return isValid;
+        }
+
+        // Next button click handler
+        document.getElementById('nextBtn').addEventListener('click', function () {
+            if (currentStep === 2) {
+                // Simulate email verification
+                const code = document.getElementById('verificationCode').value;
+                if (code === '123456' || code.length === 6) {
+                    // Accept any 6-digit code for demo
+                    currentStep++;
+                    showStep(currentStep);
+                } else {
+                    alert('Please enter a valid 6-digit verification code.');
+                }
+            } else if (currentStep === totalSteps) {
+                // Complete registration
+                if (validateStep(currentStep)) {
+                    // Close modal
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('registrationModal'));
+                    modal.hide();
+
+                    // Show success toast
+                    const toast = new bootstrap.Toast(document.getElementById('successToast'));
+                    toast.show();
+
+                    // Reset form for next use
+                    setTimeout(() => {
+                        currentStep = 1;
+                        showStep(currentStep);
+                        document.getElementById('registrationForm').reset();
+                    }, 1000);
+                }
+            } else {
+                if (validateStep(currentStep)) {
+                    currentStep++;
+                    showStep(currentStep);
+                }
+            }
+        });
+
+        // Previous button click handler
+        document.getElementById('prevBtn').addEventListener('click', function () {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        });
+
+        // Resend code handler
+        document.getElementById('resendCode').addEventListener('click', function (e) {
+            e.preventDefault();
+            alert('Verification code resent to your email!');
+        });
+
+        // Limit checkbox selections
+        function limitCheckboxes(className, maxSelections) {
+            const checkboxes = document.querySelectorAll(`.${className}`);
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    const checkedBoxes = document.querySelectorAll(`.${className}:checked`);
+                    if (checkedBoxes.length > maxSelections) {
+                        this.checked = false;
+                        alert(`You can select a maximum of ${maxSelections} options.`);
+                    }
+                });
+            });
+        }
+
+        // Apply checkbox limitations
+        limitCheckboxes('diagnosis-check', 3);
+        limitCheckboxes('status-check', 3);
+
+        // Initialize first step
+        showStep(1);
+    </script>
+
+
+    <script src="../JS/bootstrap.bundle.min.js"></script>
+    <script src="../JS/bot.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Therapist</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+        rel="stylesheet">
+    <!-- toastify js -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="../CSS/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/therapist.css">
+</head>
+
+<body>
+    <div class="layout-container">
+        <!-- Sidebar -->
+        <div class="offcanvas offcanvas-start sidebarOffcanvas" tabindex="-1" id="sidebarOffcanvas" aria-labelledby="sidebarOffcanvasLabel">
+            <div class="offcanvas-body d-flex flex-column justify-content-between align-items-center">
+            <img src="../images/logo.png" alt="logo" class="text-center mb-4" width="120">
+            <div class="d-flex align-items-start aside-nav">
+                <div class="sidebar-nav nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
+                aria-orientation="vertical">
+                <!-- dashboard -->
+                <button class="nav-link active" id="v-pills-dashboard-tab" data-bs-toggle="pill"
+                    data-bs-target="#v-pills-dashboard" type="button" role="tab" aria-controls="v-pills-dashboard"
+                    aria-selected="true">
+                    <i class="bi bi-grid-1x2 pe-1"></i>
+                    Dashboard
+                </button>
+                <!-- patients -->
+                <button class="nav-link" id="v-pills-patients-tab" data-bs-toggle="pill"
+                    data-bs-target="#v-pills-patients" type="button" role="tab" aria-controls="v-pills-patients"
+                    aria-selected="false">
+                    <i class="bi bi-people pe-1"></i>
+                    Patients
+                </button>
+                <!-- bots -->
+                <button class="nav-link" id="v-pills-bots-tab" data-bs-toggle="pill" data-bs-target="#v-pills-bots"
+                    type="button" role="tab" aria-controls="v-pills-bots" aria-selected="false">
+                    <i class="bi bi-robot pe-1"></i>
+                    Bots
+                </button>
+                <!-- chats -->
+                <button class="nav-link" id="v-pills-chats-tab" data-bs-toggle="pill"
+                    data-bs-target="#v-pills-chats" type="button" role="tab" aria-controls="v-pills-chats"
+                    aria-selected="false">
+                    <i class="bi bi-chat-left pe-1"></i>
+                    Chats</button>
+                </div>
+            </div>
+            <div class="d-flex align-items-start fz-20 mt-4" data-bs-toggle="modal" data-bs-target="#logoutModal"
+                style="cursor: pointer;">
+                <i class="bi bi-box-arrow-right pe-2"></i>
+                Logout
+            </div>
+            </div>
+            <!-- Logout Confirmation Modal -->
+            <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content d-flex flex-column justify-content-center align-items-center py-3">
+                <h4 class="modal-title" id="logoutModalLabel">Logout?</h4>
+                <p class="fs-4 my-4">Are you sure you want to logout?</p>
+                <div>
+                    <button type="button" class="custom-btn bg-transparent"
+                    data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="custom-btn btn-error " onclick="handleLogout()">Logout</button>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Persistent Header -->
+            <header class="top-bar d-flex justify-content-lg-between justify-content-md-between justify-content-sm-start align-items-center border-bottom pb-3 flex-wrap"
+                id="main-header">
+                <div class="d-flex flex-wrap align-items-center justify-content-start my-4 my-lg-0 my-md-0">
+                    <i class="bi bi-list fs-4 mx-3" data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas" aria-controls="sidebarOffcanvas"></i>
+                    <p class="fz-26 ps-2" id="header-title">Dashboard</p>
+                </div>
+                
+                <div class="d-flex justify-content-between header-icons">
+                    <div class="d-flex align-items-center justify-content-start my-3 my-lg-0 my-md-0">
+                        <div class="search-bar mx-4 border d-none" id="bot-search-bar">
+                            <i class="bi bi-search text-secondary"></i>
+                            <input type="search" class="" placeholder="Search for a bot...">
+                        </div>
+                        <!-- settings -->
+                        <i class="bi bi-gear fs-4 mx-3" data-bs-toggle="modal" data-bs-target="#settingsModal" style="cursor: pointer;"></i>
+                        
+                        <div class="position-relative border-none me-3">
+                            <i class="bi bi-bell fs-4"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle p-2 btn-primary-500 rounded-circle">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="therapist-details d-flex justify-content-between align-items-center">
+                        <img src="../images/therapist.png" alt="photo" width="70px" class="rounded-circle mx-3">
+                        <article class="">
+                            <p class="fw-bold">Darrell Steward</p>
+                            <p>Therapist</p>
+                        </article>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Tab Content -->
+            <div class="tab-content" id="v-pills-tabContent">
+                <!-- dashboard -->
+                <div class="tab-pane fade show active" id="v-pills-dashboard" role="tabpanel"
+                    aria-labelledby="v-pills-dashboard-tab" tabindex="0">
+                    <main class="dash-main">
+                        <h3>Good Morning, <span id="therapist-name" class="btn-text-primary">Dr.Darrell</span></h3>
+                        <p class="text-secondary">Have a nice day at work</p>
+                        <div class="row mt-3 gy-4">
+                            <!-- first card -->
+                            <div class="custom-3-col col-lg-3 col-md-6 col-sm-12">
+                                <article class="mb-3">
+                                    <i class="bi bi-people me-2"></i>
+                                    <span class="fs-5">Patients</span>
+                                </article>
+                                <div class="dash-card shadow p-3 ps-4" style="height: 170px;">
+                                    <div class="d-flex flex-column mt-3">
+                                        <i class="bi bi-arrow-up-right align-self-end"></i>
+                                        <span id="patient-num">50</span>
+                                        <p class="text-secondary fs-6">Total Patients</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- second card -->
+                            <div class="custom-3-col col-lg-3 col-md-6 col-sm-12">
+                                <article class="mb-3">
+                                    <i class="bi bi-robot me-2"></i>
+                                    <span class="fs-5">Bots</span>
+                                </article>
+                                <div class="dash-card shadow p-3 ps-4" style="height: 170px;">
+                                    <div class="d-flex flex-column mt-3">
+                                        <i class="bi bi-arrow-up-right align-self-end"></i>
+                                        <span id="bots-num">12</span>
+                                        <p class="text-secondary fs-6">Total Bots</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- third card -->
+                            <div class="custom-col col-lg-7 col-12">
+                                <article class="mb-3">
+                                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                    <span class="fs-5">User Warning</span>
+                                </article>
+                                <div class="dash-card warning-div shadow p-3" style="height: auto; min-height: 200px;">
+                                    <div class="row px-2 px-md-4">
+                                        <div class="table-responsive">
+                                            <table class="table table-borderless">
+                                                <thead class="border-bottom">
+                                                    <tr>
+                                                        <th>Username</th>
+                                                        <th class="middle">Last seen</th>
+                                                        <th>Inactivity</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="warning-table-body">
+                                                    <tr class="border-bottom">
+                                                        <td class="d-flex align-items-center">
+                                                            <img src="../images/patient.png" alt="patient" width="25" class="me-2">
+                                                            <span>John Doe</span>
+                                                        </td>
+                                                        <td class="middle">28 Mar 2025</td>
+                                                        <td>23 days</td>
+                                                    </tr>
+                                                    <tr class="border-bottom">
+                                                        <td class="d-flex align-items-center">
+                                                            <img src="../images/p2.png" alt="patient" width="25" class="me-2">
+                                                            <span>John</span>
+                                                        </td>
+                                                        <td class="middle">28 Mar 2025</td>
+                                                        <td>23 days</td>
+                                                    </tr>
+                                                    <tr class="border-bottom">
+                                                        <td class="d-flex align-items-center">
+                                                            <img src="../images/p3.png" alt="patient" width="25" class="me-2">
+                                                            <span>Doe</span>
+                                                        </td>
+                                                        <td class="middle">28 Mar 2025</td>
+                                                        <td>23 days</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- fourth card "activity"-->
+                            <div class="col-lg-6 col-12" >
+                                <article class="mb-3">
+                                    <i class="bi bi-activity me-2"></i>
+                                    <span class="fs-5">User Activity</span>
+                                </article>
+                                <div class="dash-card shadow p-3" style="max-height: 230px;">
+                                    <div class="row px-3">
+                                        <table class="table ps-5 table-borderless table-responsive">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">User name</th>
+                                                    <th scope="col">Bot Name</th>
+                                                    <th scope="col">Last interaction</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <img src="../images/patient.png" alt="patient" class="pe-1" width="30">
+                                                        John Doe
+                                                    </td>
+                                                    <td>
+                                                        <img src="../images/bot (1).png" alt="bot" class="pe-1" width="30">
+                                                        Lumia Bot
+                                                    </td>
+                                                    <td>Feb 20, 2025</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <img src="../images/p2.png" alt="patient" class="pe-1" width="30">
+                                                        Jane Smith
+                                                    </td>
+                                                    <td>
+                                                        <img src="../images/bot (2).png" alt="bot" class="pe-1" width="30">
+                                                        Nova Bot
+                                                    </td>
+                                                    <td>Feb 15, 2025</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <img src="../images/p3.png" alt="patient" class="pe-1" width="30">
+                                                        Alice Johnson
+                                                    </td>
+                                                    <td>
+                                                        <img src="../images/bot (3).png" alt="bot" class="pe-1" width="30">
+                                                        Spark Bot
+                                                    </td>
+                                                    <td>Feb 10, 2025</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <img src="../images/patient.png" alt="patient" class="pe-1" width="30">
+                                                        John Doe
+                                                    </td>
+                                                    <td>
+                                                        <img src="../images/bot (4).png" alt="bot" class="pe-1" width="30">
+                                                        Nova Bot
+                                                    </td>
+                                                    <td>Feb 20, 2025</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <img src="../images/p2.png" alt="patient" class="pe-1" width="30">
+                                                        Jane Smith
+                                                    </td>
+                                                    <td>
+                                                        <img src="../images/bot (5).png" alt="bot" class="pe-1" width="30">
+                                                        Lumia Bot
+                                                    </td>
+                                                    <td>Feb 15, 2025</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- fifth card "ranking" -->
+                            <div class="col-lg-6 col-12 ranking-table" >
+                                <article class="mb-3">
+                                    <i class="bi bi-bar-chart-line me-2"></i>
+                                    <span class="fs-5">Ranking</span>
+                                </article>
+                                <div class="dash-card shadow p-3" style="height: 190px;">
+
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless">
+                                            <thead class="border-bottom">
+                                                <tr>
+                                                    <th>Rank</th>
+                                                    <th class="middle">Bot name</th>
+                                                    <th>Messages</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="ranking-table-body">
+                                                <tr class="border-bottom">
+                                                    <td>1</td>
+                                                    <td class="middle"><img src="../images/bot (1).png" alt="bot"
+                                                            width="25px">
+                                                        <span class="ms-2">Lumia Bot</span>
+                                                    </td>
+                                                    <td>223</td>
+                                                </tr>
+                                                <tr class="border-bottom">
+                                                    <td>2</td>
+                                                    <td class="middle"><img src="../images/bot (2).png" alt="bot"
+                                                            width="25px">
+                                                        <span class="ms-2">Lumia Bot</span>
+                                                    </td>
+                                                    <td>203</td>
+                                                </tr>
+                                                <tr class="border-bottom">
+                                                    <td>3</td>
+                                                    <td class="middle"><img src="../images/bot (3).png" alt="bot"
+                                                            width="25px">
+                                                        <span class="ms-2">Nova Bot</span>
+                                                    </td>
+                                                    <td>150</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+                <!-- patients -->
+                <div class="patients-tab tab-pane fade" id="v-pills-patients" role="tabpanel" aria-labelledby="v-pills-patients-tab"
+                    tabindex="0">
+                    <main>
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="myChats-tab" data-bs-toggle="tab"
+                                    data-bs-target="#myPatients-tab-pane" type="button" role="tab" aria-controls="myPatients-tab-pane"
+                                    aria-selected="true">My Patients</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="following-tab" data-bs-toggle="tab" data-bs-target="#following-tab-pane"
+                                    type="button" role="tab" aria-controls="following-tab-pane" aria-selected="false">Following</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="myPatients-tab-pane" role="tabpanel" aria-labelledby="myPatients-tab"
+                                tabindex="0">
+                                <!-- section header -->
+                                <div class="row justify-content-between align-items-center m-3 m-md-4">
+                                    <div class="col-12 col-md-6 d-flex align-items-center mb-3 mb-md-0">
+                                        <i class="bi bi-people section-icon"></i>
+                                        <span class="fs-2" id="patients-count">0</span>
+                                        <p class="ms-2 border-color fs-5 fs-md-4 mb-0">Total Patients</p>
+                                    </div>
+                                    <div class="col-12 col-md-6 d-flex justify-content-start justify-content-md-end">
+                                        <!-- filter -->
+                                        <button class="custom-btn bg-transparent border me-2">
+                                            <i class="bi bi-funnel"></i>
+                                            Filters
+                                        </button>
+                                        <!-- add patient btn -->
+                                        <button class="btn-primary-500 custom-btn" data-bs-toggle="offcanvas"
+                                            data-bs-target="#rightSideOffcanvas">
+                                            Add Patient
+                                        </button>
+                                    </div>
+                                </div>
+                    
+                                <!-- empty bot container -->
+                                <div class="row justify-content-center empty-bot-container" id="empty-bot-container">
+                                    <div class="col-12 d-flex flex-column justify-content-center align-items-center py-5">
+                                        <img src="../images/patient-empty.png" alt="empty-bot" class="img-fluid" style="max-width: 300px;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="following-tab-pane" role="tabpanel" aria-labelledby="following-tab" tabindex="0">
+                                <!-- section header -->
+                                <div class="row justify-content-between align-items-center m-3 m-md-4">
+                                    <div class="col-12 col-md-6 d-flex align-items-center mb-3 mb-md-0">
+                                        <i class="bi bi-people section-icon"></i>
+                                        <span class="fs-2" id="patients-count">3</span>
+                                        <p class="ms-2 border-color fs-5 fs-md-4 mb-0">Total Patients</p>
+                                    </div>
+                                    <div class="col-12 col-md-6 d-flex justify-content-start justify-content-md-end">
+                                        <!-- filter -->
+                                        <button class="custom-btn bg-transparent border me-2">
+                                            <i class="bi bi-funnel"></i>
+                                            Filters
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- empty bot container -->
+                                <div class="row justify-content-center d-none empty-bot-container" id="empty-bot-container">
+                                    <div class="col-12 d-flex flex-column justify-content-center align-items-center py-5">
+                                        <img src="../images/patient-empty.png" alt="empty-bot" class="img-fluid" style="max-width: 300px;">
+                                    </div>
+                                </div>
+                                <!-- patient cards -->
+                                <div class="row ps-5 pe-2">
+                                    <table class="table p-10 table-borderless table-responsive" id="patients-table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Age</th>
+                                                <th scope="col">Diagnosis</th>
+                                                <th scope="col">Last Session</th>
+                                                <th scope="col">Next Session</th>
+                                                <th scope="col">Guardian</th>
+                                                <th scope="col">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <img src="../images/patient.png" alt="patient" class="pe-1" width="30">
+                                                    John Doe
+                                                </td>
+                                                <td>12 years</td>
+                                                <td>Moderate ASD</td>
+                                                <td>Feb 20, 2025</td>
+                                                <td>Mar 25, 2025</td>
+                                                <td>Emily Carter</td>
+                                                <td>
+                                                    <button class="stable-btn">
+                                                        Stable
+                                                    </button>
+                                                </td>
+                    
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <img src="../images/p2.png" alt="patient" class="pe-1" width="30">
+                                                    Jane Smith
+                                                </td>
+                                                <td>10 years</td>
+                                                <td>Severe ASD</td>
+                                                <td>Feb 15, 2025</td>
+                                                <td>Mar 20, 2025</td>
+                                                <td>Michael Smith</td>
+                                                <td>
+                                                    <button class="improving-btn">
+                                                        Improving
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <img src="../images/p3.png" alt="patient" class="pe-1" width="30">
+                                                    Alice Johnson
+                                                </td>
+                                                <td>8 years</td>
+                                                <td>Mild ASD</td>
+                                                <td>Feb 10, 2025</td>
+                                                <td>Mar 15, 2025</td>
+                                                <td>Sarah Johnson</td>
+                                                <td>
+                                                    <button class="critical-btn">
+                                                        Critical
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+                <!-- bots -->
+                <div class="tab-pane fade" id="v-pills-bots" role="tabpanel" aria-labelledby="v-pills-bots-tab"
+                    tabindex="0">
+                    <main>
+                        <!-- section header -->
+                        <div class="row justify-content-between m-4">
+                            <div class="col-xl-6 col-md-6 col-sm-12 d-flex align-items-center">
+                                <i class="bi bi-robot section-icon"></i>
+                                <span class="fs-2">0</span>
+                                <p class="ms-2 border-color fs-4">Total Bots</p>
+                            </div>
+                            <div class="col-xl-6 col-md-6 col-sm-12 text-lg-end text-center my-3 my-md-0">
+                                <!-- Button trigger modal -->
+                                <button class="btn-primary-500 custom-btn" data-bs-toggle="offcanvas"
+                                    data-bs-target="#rightSideOffcanvas">
+                                    Add Bot
+                                </button>
+                                <!-- Offcanvas -->
+                                <div class="offcanvas offcanvas-end" tabindex="-1" id="rightSideOffcanvas"
+                                    aria-labelledby="rightSideOffcanvasLabel">
+                                    <div class="offcanvas-header">
+                                        <h1 class="offcanvas-title fs-5" id="rightSideOffcanvasLabel">Add New Bot</h1>
+                                    </div>
+                                    <!-- form -->
+                                    <form>
+                                        <div class="offcanvas-body bot-form py-3 px-5 bot-form">
+
+                                            <div class="row mb-3 justify-content-start">
+                                                <div class="d-flex">
+                                                    <img src="../images/bot-default.png" alt="bot" width="100"
+                                                        class="bg-secondary-white p-1 rounded-circle">
+                                                    <div
+                                                        class="d-flex flex-column align-items-start justify-content-center ps-3">
+                                                        <button class="btn-text btn-text-primary" data-bs-toggle="modal"
+                                                            data-bs-target="#choosePictureModal">
+                                                            Choose Picture
+                                                        </button>
+
+                                                        <!-- Modal for bot avatars -->
+                                                        <div class="modal fade" id="choosePictureModal" tabindex="-1"
+                                                            aria-labelledby="choosePictureModalLabel"
+                                                            aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title"
+                                                                            id="choosePictureModalLabel">
+                                                                            Choose Bot
+                                                                            Picture</h5>
+                                                                        <button type="button" class="btn-close"
+                                                                            data-bs-dismiss="modal"
+                                                                            aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div
+                                                                            class="row justify-content-start align-items-center avatars-container">
+                                                                            <!-- Loop through 10 pictures -->
+                                                                            <div class="col-3 my-3"
+                                                                                onclick="changeBotPicture('../images/bot (1).png')">
+                                                                                <img src="../images/bot (1).png"
+                                                                                    alt="Bot 1" class="cursor-pointer">
+                                                                            </div>
+                                                                            <div class="col-3 mb-3"
+                                                                                onclick="changeBotPicture('../images/bot (2).png')">
+                                                                                <img src="../images/bot (2).png"
+                                                                                    alt="Bot 2" class="cursor-pointer">
+                                                                            </div>
+                                                                            <div class="col-3 mb-3"
+                                                                                onclick="changeBotPicture('../images/bot (3).png')">
+                                                                                <img src="../images/bot (3).png"
+                                                                                    alt="Bot 3" class="cursor-pointer">
+                                                                            </div>
+                                                                            <div class="col-3 mb-3"
+                                                                                onclick="changeBotPicture('../images/bot (4).png')">
+                                                                                <img src="../images/bot (4).png"
+                                                                                    alt="Bot 4" class="cursor-pointer">
+                                                                            </div>
+                                                                            <div class="col-3 mb-3"
+                                                                                onclick="changeBotPicture('../images/bot (5).png')">
+                                                                                <img src="../images/bot (5).png"
+                                                                                    alt="Bot 5" class="cursor-pointer">
+                                                                            </div>
+                                                                            <div class="col-3 mb-3"
+                                                                                onclick="changeBotPicture('../images/bot (6).png')">
+                                                                                <img src="../images/bot (6).png"
+                                                                                    alt="Bot 6" class="cursor-pointer">
+                                                                            </div>
+                                                                            <div class="col-3 mb-3"
+                                                                                onclick="changeBotPicture('../images/bot (7).png')">
+                                                                                <img src="../images/bot (7).png"
+                                                                                    alt="Bot 7" class="cursor-pointer">
+                                                                            </div>
+                                                                            <div class="col-3 mb-3"
+                                                                                onclick="changeBotPicture('../images/bot (8).png')">
+                                                                                <img src="../images/bot (8).png"
+                                                                                    alt="Bot 8" class="cursor-pointer">
+                                                                            </div>
+                                                                            <div class="col-3 mb-3"
+                                                                                onclick="changeBotPicture('../images/bot (9).png')">
+                                                                                <img src="../images/bot (9).png"
+                                                                                    alt="Bot 9" class="cursor-pointer">
+                                                                            </div>
+                                                                            <div class="col-3 mb-3"
+                                                                                onclick="changeBotPicture('../images/bot (10).png')">
+                                                                                <img src="../images/bot (10).png"
+                                                                                    alt="Bot 10" class="cursor-pointer">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <button class="btn-text-error btn-text"
+                                                            onclick="resetBotPicture()">
+                                                            Delete
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- bot name -->
+                                            <div class="row mb-3">
+                                                <label class="custom-label text-start" for="bot-name">Bot Name</label>
+                                                <input type="text" id="bot-name" placeholder="Breezy Bot">
+                                            </div>
+                                            <!-- bot bio -->
+                                            <div class="row mb-3">
+                                                <label class="custom-label text-start" for="bot-bio">Bot Bio</label>
+                                                <textarea id="bot-bio" rows="4"
+                                                    placeholder="Write a short introduction about the bot’s personality and role."></textarea>
+                                            </div>
+                                            <!-- bot guide -->
+                                            <div class="row mb-3">
+                                                <label class="custom-label text-start" for="bot-guide">Bot
+                                                    Guidelines</label>
+                                                <textarea id="bot-guide" rows="4"
+                                                    placeholder="Define how this bot should interact with users."></textarea>
+                                            </div>
+                                            <!-- assigned patients -->
+                                            <div class="row mb-3">
+                                                <div class="d-flex justify-content-between align-items-center p-0">
+                                                    <label class="custom-label text-start"
+                                                        for="assigned-patients">Assigned
+                                                        Patients</label>
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-text btn-text-primary" type="button"
+                                                            id="addPatientDropdown" data-bs-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                            Add Patient
+                                                        </button>
+                                                        <ul class="dropdown-menu" aria-labelledby="addPatientDropdown">
+                                                            <li><a class="dropdown-item patient-drop" href="#"
+                                                                    onclick="assignPatient('John Doe', '../images/patient.png')">
+                                                                    <div class="d-flex align-items-center">
+                                                                        <img src="../images/patient.png" alt="patient"
+                                                                            class="pe-1" width="30">
+                                                                        John Doe
+                                                                    </div>
+                                                                    <button
+                                                                        class="btn-text btn-text-primary ps-5 text-end">Add</button>
+                                                                </a></li>
+                                                            <li><a class="dropdown-item patient-drop" href="#"
+                                                                    onclick="assignPatient('Jane Smith', '../images/patient.png')">
+                                                                    <div class="d-flex align-items-center">
+                                                                        <img src="../images/patient.png" alt="patient"
+                                                                            class="pe-1" width="30">
+                                                                        Jane Smith
+                                                                    </div>
+                                                                    <button
+                                                                        class="btn-text btn-text-primary ps-5">Add</button>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item patient-drop" href="#"
+                                                                    onclick="assignPatient('Alice Johnson', '../images/patient.png')">
+                                                                    <div class="d-flex align-items-center">
+                                                                        <img src="../images/patient.png" alt="patient"
+                                                                            class="pe-1" width="30">
+                                                                        Alice Johnson
+                                                                    </div>
+                                                                    <button
+                                                                        class="btn-text btn-text-primary ps-5">Add</button>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div id="assigned-patients-list" class="mt-2"></div>
+                                            </div>
+                                            <button type="button" class="btn-text text-secondary fs-5 pe-2"
+                                                data-bs-dismiss="offcanvas">Cancel</button>
+                                            <button type="submit" class="custom-btn btn-primary-500">Create</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- empty bot container -->
+                        <div class="row justify-content-center empty-bot-container d-none">
+                            <div class="col-12 d-flex justify-content-center align-items-center py-5">
+                                <img src="../images/empty-bot.png" alt="empty-bot">
+                            </div>
+                        </div>
+                        <!-- bot cards -->
+                        <div class="row g-4 py-2 px-lg-5 px-sm-0 px-md-0 bots-card-container">
+                            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
+                                <div
+                                    class="card h-100 d-flex flex-column justify-content-center align-items-center p-3">
+                                    <div
+                                        class="d-flex justify-content-center align-items-center w-100 position-relative">
+                                        <img src="../images/bot (1).png" class="card-img-top" alt="bot">
+                                        <div class="dropdown position-absolute bot-edit-i end-0">
+                                            <i class="bi bi-three-dots-vertical fs-3" data-bs-toggle="dropdown"
+                                                aria-expanded="false"></i>
+                                            <ul class="dropdown-menu">
+                                                <li><button class="dropdown-item custom-drop" data-bs-toggle="offcanvas"
+                                                        data-bs-target="#viewBotOffcanvas">
+                                                        <i class="bi bi-eye pe-1"></i>
+                                                        View Details
+                                                    </button></li>
+                                                <li><button class="dropdown-item custom-drop" data-bs-toggle="offcanvas"
+                                                        data-bs-target="#editBotOffcanvas">
+                                                        <i class="bi bi-pencil pe-1"></i>
+                                                        Edit Bot</button></li>
+                                                <li><button class="dropdown-item custom-drop text-danger"
+                                                        onclick="deleteBot()">
+                                                        <i class="bi bi-trash pe-1"></i>
+                                                        Delete Bot</button></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title">Spark Bot</h5>
+                                        <p class="card-text">An energetic chatbot that keeps conversations fun,
+                                            motivating,
+                                            and engaging
+                                        </p>
+                                        <div class="pt-2 d-flex justify-content-center align-items-center">
+                                            <img src="../images/patient.png" alt="patient">
+                                            <img src="../images/patient.png" alt="patient">
+                                            <img src="../images/patient.png" alt="patient">
+                                            <img src="../images/patient.png" alt="patient">
+                                            <span class="btn-text-primary ps-1">
+                                                +2 assigned patients
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+                <!-- chats -->
+                <div class="chats-tab tab-pane fade" id="v-pills-chats" role="tabpanel" aria-labelledby="v-pills-chats-tab"
+                    tabindex="0">
+                    <main>
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="myChats-tab" data-bs-toggle="tab" data-bs-target="#myChats-tab-pane"
+                                    type="button" role="tab" aria-controls="myChats-tab-pane" aria-selected="true">My Patients</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="myThreads-tab" data-bs-toggle="tab" data-bs-target="#myThreads-tab-pane"
+                                    type="button" role="tab" aria-controls="myThreads-tab-pane" aria-selected="false">My Threads</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="myChats-tab-pane" role="tabpanel" aria-labelledby="myChats-tab"
+                                tabindex="0">
+                                
+                                <!-- empty bot container -->
+                                <div class="row justify-content-center empty-bot-container" id="empty-chats-container">
+                                    <div class="col-12 d-flex flex-column justify-content-center align-items-center py-5">
+                                        <img src="../images/chats-empty.png" alt="empty-bot" class="img-fluid" style="max-width: 300px;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="myThreads-tab-pane" role="tabpanel" aria-labelledby="myThreads-tab" tabindex="0">
+                                <!-- empty bot container -->
+                                <div class="row justify-content-center empty-bot-container" id="empty-threads-container">
+                                    <div class="col-12 d-flex flex-column justify-content-center align-items-center py-5">
+                                        <img src="../images/chats-empty.png" alt="empty-bot" class="img-fluid" style="max-width: 300px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <!-- settings modal -->
+    <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title ps-2" id="settingsModalLabel">Settings</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex align-items-start justify-content-between" style="height: 100vh; overflow: hidden;">
+                        <!-- buttons -->
+                        <aside class="settings-sidebar" id="settingsSidebar" style="height: 100%; overflow-y: auto;">
+                            <div class="nav settings-nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
+                                aria-orientation="vertical">
+                                <button class="nav-link active" id="v-pills-profile-tab" data-bs-toggle="pill"
+                                    data-bs-target="#v-pills-profile" type="button" role="tab"
+                                    aria-controls="v-pills-profile" aria-selected="true">
+                                    <i class="bi bi-person pe-1"></i>
+                                    Profile
+                                </button>
+                                <button class="nav-link" id="v-pills-notifications-tab" data-bs-toggle="pill"
+                                    data-bs-target="#v-pills-notifications" type="button" role="tab"
+                                    aria-controls="v-pills-notifications" aria-selected="true">
+                                    <i class="bi bi-bell pe-1"></i>
+                                    Notifications
+                                </button>
+                                <button class="nav-link" id="v-pills-changePassword-tab" data-bs-toggle="pill"
+                                    data-bs-target="#v-pills-changePassword" type="button" role="tab"
+                                    aria-controls="v-pills-changePassword" aria-selected="true">
+                                    <i class="bi bi-lock pe-1"></i>
+                                    Change Password
+                                </button>
+                                <button class="nav-link" id="v-pills-terms-tab" data-bs-toggle="pill"
+                                    data-bs-target="#v-pills-terms" type="button" role="tab" aria-controls="v-pills-terms"
+                                    aria-selected="true">
+                                    <i class="bi bi-file-earmark-text pe-1"></i>
+                                    Terms Of Use
+                                </button>
+                                <button class="nav-link" id="v-pills-privacy-tab" data-bs-toggle="pill"
+                                    data-bs-target="#v-pills-privacy" type="button" role="tab"
+                                    aria-controls="v-pills-privacy" aria-selected="true">
+                                    <i class="bi bi-shield pe-1"></i>
+                                    Privacy Policy
+                                </button>
+                                <button class="nav-link" id="v-pills-deleteAcc-tab" data-bs-toggle="pill"
+                                    data-bs-target="#v-pills-deleteAcc" type="button" role="tab"
+                                    aria-controls="v-pills-deleteAcc" aria-selected="true"
+                                    style="color:#FF4B4B !important;">
+                                    <i class="bi bi-trash pe-1"></i>
+                                    Delete Account
+                                </button>
+                            </div>
+                        </aside>
+                        <!-- content -->
+                        <div class="tab-content settings-content" id="v-pills-tabContent"
+                            style="height: 100%; overflow-y: auto;">
+                            <!-- profile -->
+                            <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel"
+                                aria-labelledby="v-pills-profile-tab" tabindex="0">
+                                <form action="./therapist.html">
+                                    <div class="row">
+                                        <!-- profile pic -->
+                                        <div class="col-12 mb-3">
+                                            <div class="d-flex justify-content-start align-items-center">
+                                                <img src="../images/therapist.png" alt="therapist" width="80px"
+                                                    class="rounded-circle">
+                                                <div
+                                                    class="d-flex flex-column align-items-start justify-content-start ps-3">
+                                                    <div>
+                                                        <label for="profile-pic"
+                                                            class="btn-text btn-text-primary border-end pe-2">upload
+                                                            Photo</label>
+                                                        <input type="file" id="profile-pic" class="d-none" accept="image/*">
+                                                        <button class="btn-text btn-text-error ps-1">Delete</button>
+                                                    </div>
+                                                    <p class="text-secondary w-75">
+                                                        An image of the person it’s best if it has the
+                                                        same length and height
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- name -->
+                                        <div class="col-lg-6 col-sm-12 col-md-12 ps-lg-1 mb-3">
+                                            <label for="firstName" class="custom-label">First
+                                                Name</label>
+                                            <span class="star-span">*</span>
+                                            <input type="text" id="firstName" placeholder="Enter your first name"
+                                                class="bg-transparent">
+                                        </div>
+                                        <div class="col-lg-6 col-sm-12 col-md-12 pe-lg-1 mb-3">
+                                            <label class="custom-label" for="lastName">Last Name</label>
+                                            <span class="star-span">*</span>
+                                            <input type="text" id="lastName" placeholder="Enter your last name"
+                                                class="bg-transparent">
+                                        </div>
+                                        <!-- dob -->
+                                        <div class="col-lg-4 col-md-12 col-sm-12 ps-lg-1">
+                                            <label class="custom-label">Date of birth</label>
+                                            <span class="star-span">*</span>
+                                            <select name="day" id="dob-day" class="form-select bg-transparent">
+                                            </select>
+                                        </div>
+                                        <!-- month select -->
+                                        <div class="col-lg-4 col-md-12 col-sm-12 px-lg-1">
+                                            <label class="custom-label"></label>
+                                            <span class="star-span"></span>
+                                            <select class="form-select bg-transparent" id="dob-month">
+                                                <option value="1">January</option>
+                                                <option value="2">February</option>
+                                                <option value="3">March</option>
+                                                <option value="4">April</option>
+                                                <option value="5">May</option>
+                                                <option value="6">June</option>
+                                                <option value="7">July</option>
+                                                <option value="8">August</option>
+                                                <option value="9">September</option>
+                                                <option value="10">October</option>
+                                                <option value="11">November</option>
+                                                <option value="12">December</option>
+                                            </select>
+                                        </div>
+                                        <!-- year select -->
+                                        <div class="col-lg-4 col-md-12 col-sm-12 pe-lg-1">
+                                            <label class="custom-label"></label>
+                                            <span class="star-span"></span>
+                                            <select class="form-select bg-transparent" id="dob-year">
+                                            </select>
+                                        </div>
+                                        <!-- gender -->
+                                        <div class="col-lg-6 col-sm-12 col-md-12 ps-lg-1">
+                                            <label class="custom-label">Gender</label>
+                                            <span class="star-span">*</span>
+                                            <input type="radio" id="female" name="customRadio" value="female"
+                                                class="bg-transparent">
+                                            <label for="female"
+                                                class="custom-radio-input input d-flex justify-content-between align-items-center custom-radio-label">
+                                                <p>Female</p>
+                                                <span class="custom-radio"></span>
+                                            </label>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-12 col-md-12 pe-lg-1">
+                                            <label class="custom-label"></label>
+                                            <span class="star-span"></span>
+                                            <input type="radio" id="male" name="customRadio" value="male"
+                                                class="bg-transparent">
+                                            <label for="male"
+                                                class="custom-radio-input input d-flex justify-content-between align-items-center custom-radio-label">
+                                                <p>Male</p>
+                                                <span class="custom-radio"></span>
+                                            </label>
+                                        </div>
+                                        <!-- bio -->
+                                        <div class="col-12 mb-4">
+                                            <label class="custom-label" for="bio">Bio</label>
+                                            <span class="star-span">*</span>
+                                            <textarea name="bio" id="bio" rows="10" class="d-block bg-transparent"
+                                                placeholder="Share something about yourself."></textarea>
+                                        </div>
+                                        <!-- country & city -->
+                                        <!-- Country -->
+                                        <div class="col-lg-6 col-12 pe-lg-1">
+                                            <label class="custom-label" for="country">Country</label>
+                                            <span class="star-span">*</span>
+                                            <select class="form-select bg-transparent" id="country">
+                                            </select>
+                                        </div>
+                                        <!-- City -->
+                                        <div class="col-lg-6 col-12 ps-lg-1 mb-3">
+                                            <label class="custom-label" for="city">City</label>
+                                            <span class="star-span">*</span>
+                                            <select class="form-select bg-transparent" id="city">
+                                            </select>
+                                        </div>
+                                        <div class="col-12 d-flex justify-content-end align-items-center">
+                                            <button class="custom-btn bg-transparent">Cancel</button>
+                                            <button class="custom-btn btn-primary-500">Save
+                                                Changes</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- notifications -->
+                            <div class="tab-pane fade" id="v-pills-notifications" role="tabpanel"
+                                aria-labelledby="v-pills-notifications-tab" tabindex="0">
+                                <div class="d-flex justify-content-between align-items-center w-100">
+                                    <p>Allow Notification</p>
+                                    <i class="bi bi-toggle-on fs-4" id="notificationToggle"></i>
+                                </div>
+                            </div>
+                            <!-- change password -->
+                            <div class="tab-pane fade" id="v-pills-changePassword" role="tabpanel"
+                                aria-labelledby="v-pills-changePassword-tab" tabindex="0">
+                                <div>
+                                    <form action="changePassword">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <label for="currentPassword">Current Password</label>
+                                                <div class="position-relative custom-input">
+                                                    <input type="password" id="currentPassword" name="currentPassword"
+                                                        class="bg-transparent" required>
+                                                    <i class="bi bi-eye" id="toggleCurrentPassword"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="newPassword">New Password</label>
+                                                <div class="position-relative custom-input">
+                                                    <input type="password" class="bg-transparent" id="newPassword"
+                                                        name="newPassword" required>
+                                                    <i class="bi bi-eye" id="toggleNewPassword"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="confirmPassword">Confirm New
+                                                    Password</label>
+                                                <div class="position-relative custom-input">
+                                                    <input type="password" id="confirmPassword" name="confirmPassword"
+                                                        class="bg-transparent" required>
+                                                    <i class="bi bi-eye" id="toggleConfirmPassword"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- terms of use -->
+                            <div class="tab-pane fade" id="v-pills-terms" role="tabpanel"
+                                aria-labelledby="v-pills-terms-tab" tabindex="0">
+                            </div>
+                            <!-- privacy policy -->
+                            <div class="tab-pane fade" id="v-pills-privacy" role="tabpanel"
+                                aria-labelledby="v-pills-privacy-tab" tabindex="0">
+                            </div>
+                            <!-- delete account -->
+                            <div class="tab-pane fade" id="v-pills-deleteAcc" role="tabpanel"
+                                aria-labelledby="v-pills-deleteAcc-tab" tabindex="0">
+                                <div class="d-flex flex-column justify-content-center align-items-start">
+                                    <p class="mb-3 text-secondary fs-5">For Security Reasons, Please
+                                        Provide Your Existing Password</p>
+                                    <label for="password" class="custom-label text-secondary ms-1 mb-1">Password</label>
+                                    <input type="password" id="password" name="password" class="bg-transparent ms-1"
+                                        placeholder="Enter your password" required>
+                                    <button class="custom-btn btn-error w-100 my-3"
+                                        onclick="confirmDeletion()">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- View Bot Offcanvas -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="viewBotOffcanvas" aria-labelledby="viewBotOffcanvasLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="viewBotOffcanvasLabel">Lumia Bot</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body bot-form py-3 px-5 bot-form">
+            <div class="mb-3 d-flex justify-content-between align-items-start">
+                <div class="d-flex flex-column align-items-start justify-content-start">
+                    <p class="fz-20">Bot Picture</p>
+                    <img src="../images/bot (1).png" alt="bot" width="100"
+                        class="bg-secondary-white pt-3 rounded-circle">
+                </div>
+                <button class="text-secondary fs-5 bg-transparent" onclick="closeViewAndOpenEditBot()">
+                    <i class="bi bi-pencil pe-1"></i>
+                    <span>Edit Bot</span>
+                </button>
+            </div>
+            <!-- bot name -->
+            <div class="row mb-3">
+                <label class="custom-label text-start" for="bot-name">Bot Name</label>
+                <input type="text" id="bot-name" placeholder="Lumia Bot" class="bg-transparent" readonly>
+            </div>
+            <!-- bot bio -->
+            <div class="row mb-3">
+                <label class="custom-label text-start" for="bot-bio">Bot Bio</label>
+                <textarea id="bot-bio" rows="4" class="bg-transparent" readonly
+                    placeholder="Lumia is a kind and supportive chatbot that encourages positive and thoughtful conversations."></textarea>
+            </div>
+            <!-- bot guide -->
+            <div class="row mb-3">
+                <label class="custom-label text-start" for="bot-guide">Bot Guidelines</label>
+                <textarea class="bg-transparent" id="bot-guide" rows="4" readonly
+                    placeholder="Use positive and reassuring language. Keep responses short and easy to understand. Ask open-ended questions to encourage conversation. Avoid giving medical or diagnostic advice. Acknowledge emotions and offer supportive responses."></textarea>
+            </div>
+            <!-- assigned patients -->
+            <div class="row mb-3">
+                <div class="d-flex flex-column justify-content-between align-items-start p-0">
+                    <label class="custom-label text-start mb-1" for="assigned-patients">Assigned Patients</label>
+                    <div class="custom-btn w-100 text-start custom-border px-2 text-secondary">
+                        <img src="../images/patient.png" alt="patient" class="pe-1" width="30">
+                        Liam Carter
+                    </div>
+                </div>
+                <div id="assigned-patients-list" class="mt-2"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Bot Offcanvas -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="editBotOffcanvas" aria-labelledby="editBotOffcanvasLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="editBotOffcanvasLabel">Edit Bot</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body bot-form py-3 px-5 bot-form">
+            <div class="row mb-3 justify-content-start">
+                <div class="d-flex">
+                    <img src="../images/bot (5).png" alt="bot" width="100"
+                        class="bg-secondary-white p-1 rounded-circle">
+                    <div class="d-flex flex-column align-items-start justify-content-center ps-3">
+                        <button class="btn-text btn-text-primary" data-bs-toggle="modal"
+                            data-bs-target="#choosePictureModalEdit">
+                            Change Picture
+                        </button>
+
+                        <!-- Modal for bot avatars -->
+                        <div class="modal fade" id="choosePictureModalEdit" tabindex="-1"
+                            aria-labelledby="choosePictureModalEditLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="choosePictureModalEditLabel">Change Picture</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div
+                                        class="modal-body row justify-content-start align-items-center avatars-container">
+                                        <div class="row justify-content-start align-items-center avatars-container">
+                                            <!-- Loop through 10 pictures -->
+                                            <div class="col-3 my-3" onclick="changeBotPicture('../images/bot (1).png')">
+                                                <img src="../images/bot (1).png" alt="Bot 1" class="cursor-pointer">
+                                            </div>
+                                            <div class="col-3 mb-3" onclick="changeBotPicture('../images/bot (2).png')">
+                                                <img src="../images/bot (2).png" alt="Bot 2" class="cursor-pointer">
+                                            </div>
+                                            <div class="col-3 mb-3" onclick="changeBotPicture('../images/bot (3).png')">
+                                                <img src="../images/bot (3).png" alt="Bot 3" class="cursor-pointer">
+                                            </div>
+                                            <div class="col-3 mb-3" onclick="changeBotPicture('../images/bot (4).png')">
+                                                <img src="../images/bot (4).png" alt="Bot 4" class="cursor-pointer">
+                                            </div>
+                                            <div class="col-3 mb-3" onclick="changeBotPicture('../images/bot (5).png')">
+                                                <img src="../images/bot (5).png" alt="Bot 5" class="cursor-pointer">
+                                            </div>
+                                            <div class="col-3 mb-3" onclick="changeBotPicture('../images/bot (6).png')">
+                                                <img src="../images/bot (6).png" alt="Bot 6" class="cursor-pointer">
+                                            </div>
+                                            <div class="col-3 mb-3" onclick="changeBotPicture('../images/bot (7).png')">
+                                                <img src="../images/bot (7).png" alt="Bot 7" class="cursor-pointer">
+                                            </div>
+                                            <div class="col-3 mb-3" onclick="changeBotPicture('../images/bot (8).png')">
+                                                <img src="../images/bot (8).png" alt="Bot 8" class="cursor-pointer">
+                                            </div>
+                                            <div class="col-3 mb-3" onclick="changeBotPicture('../images/bot (9).png')">
+                                                <img src="../images/bot (9).png" alt="Bot 9" class="cursor-pointer">
+                                            </div>
+                                            <div class="col-3 mb-3"
+                                                onclick="changeBotPicture('../images/bot (10).png')">
+                                                <img src="../images/bot (10).png" alt="Bot 10" class="cursor-pointer">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn-text-error btn-text" onclick="resetBotPicture()">Delete</button>
+                    </div>
+                </div>
+            </div>
+            <!-- bot name -->
+            <div class="row mb-3">
+                <label class="custom-label text-start" for="bot-name">Bot Name</label>
+                <input type="text" id="edit-bot-name" class="bg-transparent" placeholder="Breezy Bot">
+            </div>
+            <!-- bot bio -->
+            <div class="row mb-3">
+                <label class="custom-label text-start" for="bot-bio">Bot Bio</label>
+                <textarea id="edit-bot-bio" rows="4" class="bg-transparent"
+                    placeholder="Write a short introduction about the bot’s personality and role."></textarea>
+            </div>
+            <!-- bot guide -->
+            <div class="row mb-3">
+                <label class="custom-label text-start" for="bot-guide">Bot Guidelines</label>
+                <textarea id="edit-bot-guide" rows="4" class="bg-transparent"
+                    placeholder="Define how this bot should interact with users."></textarea>
+            </div>
+            <!-- assigned patients -->
+            <div class="row mb-3">
+                <div class="d-flex flex-column justify-content-between align-items-start p-0">
+                    <div class="d-flex justify-content-between align-items-center p-0 w-100">
+                        <label class="custom-label text-start" for="assigned-patients">Assigned Patients</label>
+                        <button class="btn btn-text btn-text-primary" type="button">Edit Patients</button>
+                    </div>
+                    <div class="custom-btn w-100 text-start custom-border px-2 text-secondary">
+                        <img src="../images/patient.png" alt="patient" class="pe-1" width="30">
+                        Liam Carter
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="offcanvas-footer py-3 px-4 text-end">
+            <button type="button" class="btn-text text-secondary fs-5 pe-2" data-bs-dismiss="offcanvas">Cancel</button>
+            <button type="submit" class="custom-btn btn-primary-500 px-3" onclick="saveChanges()">Save Changes</button>
+        </div>
+    </div>
+
+    <!-- Delete Bot Confirmation Modal -->
+    <div class="modal fade" id="deleteBotModal" tabindex="-1" aria-labelledby="deleteBotModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content d-flex flex-column justify-content-center align-items-center p-3 text-secondary">
+                <h4 class="modal-title text-dark" id="deleteBotModalLabel">Delete Bot?</h4>
+                <p class="fs-5 mt-4 mb-3">Are you sure you want to delete this bot?</p>
+                <p class="fs-6 mb-4 text-center">This action cannot be undone, and all assigned patients will lose
+                    access to this bot's support.</p>
+                <div>
+
+                    <button type="button" class="custom-btn bg-transparent" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="custom-btn btn-error " onclick="deleteBot()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../JS/bootstrap.bundle.min.js"></script>
+    <!-- <script src="../JS/bot.js"></script> -->
+</body>
+
+</html>

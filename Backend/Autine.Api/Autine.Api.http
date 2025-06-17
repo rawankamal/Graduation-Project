@@ -1,0 +1,6 @@
+@Autine.Api_HostAddress = http://localhost:5221
+
+GET {{Autine.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
