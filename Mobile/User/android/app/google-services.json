@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "164947829114",
+    "project_id": "autine-2a507",
+    "storage_bucket": "autine-2a507.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:164947829114:android:c06f48271226860c8d76c3",
+        "android_client_info": {
+          "package_name": "com.example.test_sign_up"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAW_rELoWFcqF_ebW_lUsTm-fbpylvM1WQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
