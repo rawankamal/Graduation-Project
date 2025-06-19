@@ -49,4 +49,3 @@ creating a sense of continuity and personalization in therapy.
 - Omnia Maher (Mobile Developer) GitHub: https://github.com/OmOmz
 - Mayar Mokhtar (UI/UX) GitHub: https://github.com/mayar254
 - Rawan Kamal (Frontend Developer) GitHub: https://github.com/rawankamal
-- Nermeen Maged (Frontend Developer) GitHub: https://github.com/nermeen157
